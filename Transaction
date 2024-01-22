@@ -1,0 +1,24 @@
+import java.time.LocalDate;
+public class Transaction {
+    Book book;
+    LocalDate date;
+    String transactionType;   //borrow or return
+
+    public Transaction(Book book,LocalDate date,String transactionType){
+        this.book=book;
+        this.date=date;
+        this.transactionType=transactionType;
+    }
+
+    public Book getBook(){
+        return book;
+    }
+
+    public LocalDate getDate(){
+        return date;
+    }
+
+    public String getTransactionType(){
+        return transactionType;
+    }
+}
