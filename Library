@@ -1,0 +1,13 @@
+import java.util.List;
+
+public interface Library {
+    void addBook(Book book);
+    void removeBook(Book book);
+    List<Book> getAllBooks();
+    int getTotalNumberOfBooks();
+
+    default void displayTotalBooks(){
+
+        System.out.println("Total no. of Books: "+getTotalNumberOfBooks());
+    }
+}
