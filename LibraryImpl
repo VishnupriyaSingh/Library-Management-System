@@ -1,0 +1,84 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.Optional;
+
+public class LibraryImpl implements Library{
+    List<Book> books=new ArrayList<>();
+
+    @Override
+    public void addBook(Book book){
+        books.add(book);
+    }
+
+    @Override
+    public void removeBook(Book book){
+        books.remove(book);
+    }
+
+    @Override
+    public List<Book> getAllBooks(){
+        return new ArrayList<>(books);
+    }
+
+    @Override
+    public int getTotalNumberOfBooks(){
+        return books.size();
+    }
+
+    public void displayBooksSortedByTitle(){
+        books.stream()
+                .sorted(Comparator.comparing(Book::getTitle))
+                .forEach(System.out::println);
+    }
+
+    public List<Book> findBooksByAuthor(String author){
+        return books.stream()
+                .filter(book->book.getAuthor().equalsIgnoreCase(author)).collect(Collectors.toList());
+    }
+
+    public double getTotalValueOfBooks(){
+        return books.stream()
+                .mapToDouble(Book::getPrice)
+                .sum();
+    }
+
+    public Optional<Book> findBookByTitle(String title){
+        return books.stream()
+                .filter(book->book.getTitle().equalsIgnoreCase(title))
+                .findFirst();
+    }
+
+    public List<Book> findBooks(BookPredicate predicate) {
+        return books.stream()
+                .filter(predicate::test)
+                .collect(Collectors.toList());
+    }
+
+    public double calculateAveragePrice() {
+        return books.stream()
+                .mapToDouble(Book::getPrice)
+                .average()
+                .orElse(0.0);
+    }
+
+    public Optional<Book> findMostExpensiveBook() {
+        return books.stream()
+                .max(Comparator.comparingDouble(Book::getPrice));
+    }
+
+    public List<Book> findBooksPublishedBetween(LocalDate start, LocalDate end) {
+        return books.stream()
+                .filter(book -> book.getPublicationDate() != null &&
+                        !book.getPublicationDate().isBefore(start) &&
+                        !book.getPublicationDate().isAfter(end))
+                .collect(Collectors.toList());
+    }
+
+
+    public void removeBookByTitle(String title) {
+        books.removeIf(book -> book.getTitle().equalsIgnoreCase(title));
+    }
+}
