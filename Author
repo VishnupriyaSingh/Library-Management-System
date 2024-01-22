@@ -1,0 +1,31 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.List;
+
+public class Author {
+    String name;
+    LocalDate birthDate;
+    List<Book> writtenBooks;
+
+    public Author(String name,LocalDate birthDate,List<Book> writtenBooks){
+        this.name=name;
+        this.birthDate=birthDate;
+        this.writtenBooks=writtenBooks;
+    }
+
+    public  String getName(){
+        return name;
+    }
+
+    public LocalDate getBirthDate(){
+        return birthDate;
+    }
+
+    public List<Book> getwrittenBooks(){
+        return writtenBooks;
+    }
+
+    public int getAge(){
+        return Period.between(birthDate,LocalDate.now()).getYears();
+    }
+}
