@@ -1,0 +1,83 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class Main {
+    public static void main(String[] args) {
+        LibraryImpl myLibrary = new LibraryImpl();
+
+        // Create authors
+        Author fitzgerald = new Author("Scott Fitzgerald", LocalDate.of(1896, 9, 24), new ArrayList<>());
+        Author orwell = new Author("George Orwell", LocalDate.of(1903, 6, 25), new ArrayList<>());
+        Author lee = new Author("Harper Lee", LocalDate.of(1926, 4, 28), new ArrayList<>());
+        Author huxley = new Author("Aldous Huxley", LocalDate.of(1894, 7, 26), new ArrayList<>());
+        Author austen = new Author("Jane Austen", LocalDate.of(1775, 12, 16), new ArrayList<>());
+
+        // Create books
+        Book book1 = new Book("The Great Gatsby", fitzgerald.getName(), "Classic", 100, LocalDate.of(1925, 4, 10));
+        Book book2 = new Book("1984", orwell.getName(), "Dystopian", 80, LocalDate.of(1949, 6, 8));
+        Book book3 = new Book("How To Kill a Mockingbird", lee.getName(), "Fiction", 70, LocalDate.of(1960, 7, 11));
+        Book book4 = new Book("Brave New World", huxley.getName(), "Dystopian", 90, LocalDate.of(1932, 10, 1));
+        Book book5 = new Book("Pride and Prejudice", austen.getName(), "Romance", 60, LocalDate.of(1813, 1, 28));
+
+        // Adding books to the library
+        myLibrary.addBook(book1);
+        myLibrary.addBook(book2);
+        myLibrary.addBook(book3);
+        myLibrary.addBook(book4);
+        myLibrary.addBook(book5);
+
+        //total no of books
+        System.out.println("Total number of books in the library: " + myLibrary.getTotalNumberOfBooks());
+
+        // Displaying all books sorted by title
+        System.out.println("Books sorted by title:");
+        myLibrary.displayBooksSortedByTitle();
+
+        // Finding all books in a certain genre
+        System.out.println("\nDystopian Books:");
+        List<Book> dystopianBooks = myLibrary.findBooks(book -> book.getGenre().equalsIgnoreCase("Dystopian"));
+        dystopianBooks.forEach(System.out::println);
+        System.out.println();
+
+        //Searching with Author name
+        System.out.println("Books by Scott Fitzgerald:");
+        List<Book> booksByFitzgerald = myLibrary.findBooksByAuthor("Scott Fitzgerald");
+        booksByFitzgerald.forEach(System.out::println);
+
+        // Finding a book by title using Optional
+        System.out.println("\nSearching for 'The Great Gatsby':");
+        Optional<Book> searchedBook = myLibrary.findBookByTitle("The Great Gatsby");
+        searchedBook.ifPresent(System.out::println);
+        System.out.println();
+
+        //Total value of books
+        System.out.println("Total value of books in the library: " + myLibrary.getTotalValueOfBooks());
+
+        // Avreage price of all books
+        System.out.println("\nAverage Price of All Books: " + myLibrary.calculateAveragePrice());
+
+        // Find most expensive book
+        myLibrary.findMostExpensiveBook().ifPresent(book -> System.out.println("\nMost Expensive Book: " + book));
+
+        // Find books published within a specific time range
+        LocalDate start = LocalDate.of(1900, 1, 1);
+        LocalDate end = LocalDate.of(1950, 12, 31);
+
+        System.out.println("\nBooks published between 1900 and 1950:");
+        List<Book> booksInRange = myLibrary.findBooksPublishedBetween(start, end);
+        booksInRange.forEach(System.out::println);
+
+        //condition
+        System.out.println("\nBooks with a price less than 90:");
+        List<Book> booksUnder90 = myLibrary.findBooks(book -> book.getPrice() < 90);
+        booksUnder90.forEach(System.out::println);
+
+        // Remove "1984 Boook" from the library
+        myLibrary.removeBookByTitle("1984");
+        System.out.println("\nRemaining Books after removing '1984':");
+        myLibrary.getAllBooks().forEach(System.out::println);
+
+    }
+}
