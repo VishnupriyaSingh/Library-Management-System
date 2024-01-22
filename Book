@@ -1,0 +1,44 @@
+import java.time.LocalDate;
+
+public class Book{
+    String title;
+    String author;
+    String genre;
+    double price;
+    LocalDate publicationDate;
+
+    public Book(String title,String author,String genre,double price, LocalDate publicationDate){
+        this.title=title;
+        this.author=author;
+        this.genre=genre;
+        this.price=price;
+        this.publicationDate = publicationDate;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public String getAuthor(){
+        return author;
+    }
+
+    public String getGenre(){
+        return genre;
+    }
+
+    public double getPrice(){
+        return price;
+    }
+
+    public LocalDate getPublicationDate() {
+        return publicationDate;
+    }
+
+
+    @Override
+    public String toString(){
+
+        return "Book{"+"Title= "+title+", Author"+author+", Genre"+genre+", Price"+price+"}";
+    }
+}
